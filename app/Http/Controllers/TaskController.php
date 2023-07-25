@@ -7,6 +7,7 @@ use App\Models\TaskList;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\Task;
+use Illuminate\Support\Facades\Storage;
 use Intervention\Image\ImageManagerStatic as Image;
 use Illuminate\Support\Facades\File;
 
@@ -26,18 +27,10 @@ class TaskController extends Controller
 
         $task->task_list_id = $request->task_list_id;
         $task->title = $request->title;
+
         if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $name = time().'.'.$image->getClientOriginalExtension();
-            $destinationPath = public_path('/images');
-
-            if (!file_exists($destinationPath)) {
-                mkdir($destinationPath, 0777, true);
-            }
-
-            $img = Image::make($image->getRealPath());
-            $img->save($destinationPath.'/'.$name);
-
+            $name = time().'.'.$request->file('image')->getClientOriginalExtension();
+            $request->file('image')->storeAs('public', $name);
             $task->image = $name;
         }
         $task->save();
@@ -61,25 +54,16 @@ class TaskController extends Controller
 
         if ($request->has('delete_image')) {
             if ($task->image != null) {
-                File::delete(public_path('images/' . $task->image));
+                Storage::disk('public')->delete($task->image);
                 $task->image = null; // here we're making the img field null after deleting it
             }
         } elseif ($request->hasFile('image')) {
             if ($task->image != null) {
-                File::delete(public_path('images/' . $task->image));
+                Storage::disk('public')->delete($task->image);
             }
 
-            $image = $request->file('image');
-            $name = time().'.'.$image->getClientOriginalExtension();
-            $destinationPath = public_path('/images');
-
-            if (!file_exists($destinationPath)) {
-                mkdir($destinationPath, 0777, true);
-            }
-
-            $img = Image::make($image->getRealPath());
-            $img->save($destinationPath.'/'.$name);
-
+            $name = time().'.'.$request->file('image')->getClientOriginalExtension();
+            $request->file('image')->storeAs('public', $name);
             $task->image = $name;
         }
 

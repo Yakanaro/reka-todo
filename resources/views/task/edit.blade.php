@@ -29,8 +29,8 @@
                     <div class="mb-3">
                         <label for="formFile" class="form-label">Текущее изображение</label>
                         @if($task->image)
-                            <a href="{{ asset('images/'.$task->image) }}" target="_blank">
-                                <img src="{{ asset('images/'.$task->image) }}" width="100">
+                            <a href="{{ asset('storage/'.$task->image) }}" target="_blank">
+                                <img src="{{ asset('storage/'.$task->image) }}" width="100">
                             </a>
                             <button type="submit" name="delete_image" class="btn btn-danger" value="1">Удалить изображение</button>
                         @else

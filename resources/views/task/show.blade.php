@@ -39,8 +39,8 @@
                                             @endforeach
                                             <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault{{ $task->id }}">
                                             @if($task->image)
-                                                <a href="{{ asset('images/'.$task->image) }}" target="_blank">
-                                                    <img class="mt-2 mb-2 ms-2" src="{{ asset('images/'.$task->image) }}" style="width:150px;height:150px;">
+                                                <a href="{{ asset('storage/'.$task->image) }}" target="_blank">
+                                                    <img class="mt-2 mb-2 ms-2" src="{{ asset('storage/'.$task->image) }}" style="width:150px;height:150px;">
                                                 </a>
                                             @endif
                                             <label class="form-check-label ms-2" for="flexCheckDefault{{ $task->id }}">

@@ -1,6 +1,5 @@
 <form method="POST" action="{{ route('tag.store')}}">
     @csrf
-{{--    <input type="hidden" name="task_list_id" value="{{ $taskList->id }}">--}}
     <div class="modal fade" id="addTag" tabindex="-1" aria-labelledby="addTagLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
